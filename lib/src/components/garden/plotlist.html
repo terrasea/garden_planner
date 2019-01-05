@@ -1,0 +1,18 @@
+<material-list>
+    <material-list-item *ngFor="let plot of plots">
+        <garden-plot [plot]="plot"></garden-plot>
+    </material-list-item>
+</material-list>
+<material-button (trigger)="addPlot = true"
+                 [disabled]="addPlot"
+                 raised clear-size>
+    <material-icon icon="add"></material-icon>
+</material-button>
+
+<modal [visible]="addPlot">
+    <material-dialog class="basic-dialog">
+        <div id="create">
+            <garden-plot-create (onPlotAdd)="onAddPlot" (onCancel)="addPlot = false"></garden-plot-create>
+        </div>
+    </material-dialog>
+</modal>

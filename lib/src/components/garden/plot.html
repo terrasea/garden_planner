@@ -1,0 +1,9 @@
+<div class="plot" myHighlight>
+    <h2>{{ plot.name }}</h2>
+    <h3>Date: {{ plot.date }}</h3>
+    <material-list>
+        <material-list-item *ngFor="let plant of plot.plants">
+            {{ plant.common_name }} <i class="space">{{ plant.sow_plant_date | date }}</i><strong class="space">{{ plant.metadata | keyValue:'family' }}</strong>
+        </material-list-item>
+    </material-list>
+</div>

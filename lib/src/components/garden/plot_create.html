@@ -1,0 +1,40 @@
+<div>
+    <material-input
+                    keypressUpdate
+                    [(ngModel)]="plot.name"
+                    label="Plot Name">
+    <!--(change)="onChangeId($event)"-->
+    </material-input><br>
+    <material-datepicker
+            [(date)]="plot.date"
+            label="Plot Date">
+    </material-datepicker>
+
+    <div>Name: {{plot.name}}</div>
+    <div>Date: {{plot.date}}</div>
+    <div>
+        <h5>Plants:</h5>
+        <material-list>
+            <material-list-item *ngFor="let plant of plot.plants">
+                {{ plant.common_name }}
+                <i class="space" *ngIf="plant.sow_plant_date">
+                    {{ plant.sow_plant_date | date }}
+                </i>
+                <strong class="space" *ngIf="plant.metadata">
+                    {{ plant.metadata | keyValue:'family' }}
+                </strong>
+            </material-list-item>
+        </material-list>
+    </div>
+    <div>
+        <garden-plot-plant-create [(plot)]="plot"></garden-plot-plant-create>
+    </div>
+    <div>
+        <material-button (click)="addPlot" raised clear-size>
+            <material-icon icon="check"></material-icon>Create Plot
+        </material-button>
+        <material-button (click)="cancel" raised clear-size>
+            <material-icon icon="cancel"></material-icon>Cancel
+        </material-button>
+    </div>
+</div>

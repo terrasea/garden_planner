@@ -1,0 +1,10 @@
+<material-input
+        keypressUpdate
+        [(ngModel)]="plant.common_name"
+        label="Plant Name">
+    <!--(change)="onChangeId($event)"-->
+</material-input>
+
+<material-button (click)="onClick" raised clear-size>
+    <material-icon icon="add"></material-icon>Add Plant
+</material-button>
