@@ -27,7 +27,6 @@ class Plot {
   }
 
   factory Plot.fromMap(Map json) {
-    print(json['plants'].runtimeType);
     return new Plot(
       name: json.putIfAbsent('name', () => 'unknown'),
       date: new Date.parse(
@@ -76,7 +75,6 @@ class PlotPlant {
   }
 
   factory PlotPlant.fromMap(Map json) {
-    print(json);
     return new PlotPlant(
         common_name: json.putIfAbsent('common_name', () => 'unknown'),
         sow_plant_date: new Date.parse(

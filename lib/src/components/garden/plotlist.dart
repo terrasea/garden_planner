@@ -39,9 +39,7 @@ class PlotList implements OnInit {
   PlotList(this._gardenService);
 
   ngOnInit() async {
-    print('await my friend');
     plots = await _gardenService.getAll();
-    print('The wait is over');
   }
 
   onAddPlot(Plot plot) {
@@ -51,8 +49,6 @@ class PlotList implements OnInit {
   }
 
   saveGarden(e) async {
-    print('await for the add');
     await _gardenService.addPlots(plots);
-    print('The wait is over');
   }
 }

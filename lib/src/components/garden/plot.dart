@@ -15,7 +15,7 @@ import 'package:garden_planner/src/plot/plot.dart';
   styleUrls: const ['plot.css'],
   templateUrl: 'plot.html',
   directives: [
-//    NgIf,
+    NgIf,
     NgFor,
     HighlightDirective,
     MaterialListComponent,

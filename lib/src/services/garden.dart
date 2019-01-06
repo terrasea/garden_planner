@@ -56,32 +56,23 @@ class Storage {
   Future<List<Plot>> getAllPlots() async {
     await _loadedDB;
 
-    print(1);
-
     List<Plot> plots = [];
 
     var trans = _database.transaction(MILESTONE_STORE, 'readonly');
     var store = trans.objectStore(MILESTONE_STORE);
 
-    print(2);
     var cursors = store.openCursor(autoAdvance: true).asBroadcastStream();
     cursors.listen((cursor) {
-      print('cursor: ${cursor.key}, ${cursor.value}');
       var plot = new Plot.fromJson(cursor.value);
       plot.id = cursor.key;
-      print(plot);
       plots.add(plot);
     });
-
-//    print(plots.runtimeType);
-    print(3);
 
     return plots;
   }
 
   addAll(List<Plot> plots) async {
     for(var plot in plots) {
-      print(plot);
       await _addPlot(plot);
     }
   }
@@ -93,8 +84,6 @@ class Storage {
     var key = await store.add(plot.toJson());
 
     plot.id = key;
-
-    print(plot.id);
 
     return trans.completed;
   }
