@@ -7,11 +7,12 @@ import 'package:intl/intl.dart' show DateFormat;
 import 'package:angular_components/angular_components.dart' show Date;
 
 class Plot {
+  var id;
   String name;
   Date date;
-  List plants;
+  var plants;
 
-  static final date_format = new DateFormat('Y.m.d');
+  static final date_format = new DateFormat('yyyy.m.d');
 
   Plot({
     this.name,
@@ -26,6 +27,7 @@ class Plot {
   }
 
   factory Plot.fromMap(Map json) {
+    print(json['plants'].runtimeType);
     return new Plot(
       name: json.putIfAbsent('name', () => 'unknown'),
       date: new Date.parse(
@@ -43,7 +45,6 @@ class Plot {
   };
 
   toJson() {
-    print(toMap());
     return jsonEncode(toMap());
   }
 
@@ -57,6 +58,8 @@ class PlotPlant {
   String common_name;
   Date sow_plant_date;
   PlantMetadata metadata;
+
+  static final date_format = new DateFormat('yyyy.m.d');
 
   PlotPlant(
       {
@@ -73,10 +76,12 @@ class PlotPlant {
   }
 
   factory PlotPlant.fromMap(Map json) {
+    print(json);
     return new PlotPlant(
         common_name: json.putIfAbsent('common_name', () => 'unknown'),
-        sow_plant_date: json.putIfAbsent(
-            'sow_plant_date', () => new Date.today(),
+        sow_plant_date: new Date.parse(
+            json.putIfAbsent('sow_plant_date', () => new Date.today().format(date_format)),
+            date_format
         ),
         metadata: new PlantMetadata.fromMap(json.putIfAbsent('metadata', () => {}))
     );
@@ -84,7 +89,7 @@ class PlotPlant {
 
   toMap() => {
     'common_name': common_name,
-    'sow_plant_date': sow_plant_date,
+    'sow_plant_date': sow_plant_date != null ? sow_plant_date.format(date_format) : new Date.today().format(date_format),
     'metadata': metadata != null ? metadata.toMap() : {},
   };
 

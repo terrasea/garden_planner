@@ -6,6 +6,7 @@ import 'package:angular_components/angular_components.dart';
 import 'package:garden_planner/src/plot/plot.dart';
 import 'package:garden_planner/src/components/garden/plot.dart';
 import 'package:garden_planner/src/components/garden/plot_create.dart';
+import 'package:garden_planner/src/services/garden.dart';
 
 @Component(
   selector: 'garden-plotlist',
@@ -23,16 +24,35 @@ import 'package:garden_planner/src/components/garden/plot_create.dart';
     PlotCreateComponent,
     PlotComponent,
   ],
-  providers: const [overlayBindings],
+  providers: const [overlayBindings, GardenService],
 )
-class PlotList {
-  bool addPlot = false;
+class PlotList implements OnInit {
+  final GardenService _gardenService;
 
-  List<Plot> plots = [];
+  bool addPlot = false;
+  bool _hasNoPlots = false;
+  bool get hasNoPlots => _hasNoPlots || plots != null && plots.length == 0;
+  void set hasNoPlots(val) => _hasNoPlots = val;
+
+  List<Plot> plots;
+
+  PlotList(this._gardenService);
+
+  ngOnInit() async {
+    print('await my friend');
+    plots = await _gardenService.getAll();
+    print('The wait is over');
+  }
 
   onAddPlot(Plot plot) {
     plots.add(plot);
     addPlot = false;
+    hasNoPlots = false;
   }
 
+  saveGarden(e) async {
+    print('await for the add');
+    await _gardenService.addPlots(plots);
+    print('The wait is over');
+  }
 }
