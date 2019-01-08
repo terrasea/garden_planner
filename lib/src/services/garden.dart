@@ -81,9 +81,11 @@ class Storage {
     var trans = _database.transaction(MILESTONE_STORE, 'readwrite');
     var store = trans.objectStore(MILESTONE_STORE);
 
-    var key = await store.add(plot.toJson());
+    if(plot.id == null) {
+      var key = await store.add(plot.toJson());
 
-    plot.id = key;
+      plot.id = key;
+    }
 
     return trans.completed;
   }
