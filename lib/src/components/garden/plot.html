@@ -2,8 +2,34 @@
     <h2>{{ plot.name }}</h2>
     <h3>Date: {{ plot.date }}</h3>
     <material-list>
-        <material-list-item *ngFor="let plant of plot.plants">
+        <material-list-item *ngFor="let plant of plot.plants" (trigger)="deletePlant(plant)">
+            <material-icon size="small" icon="delete"></material-icon>
+
             {{ plant.common_name }} <i class="space">{{ plant.sow_plant_date }}</i><strong class="space" *ngIf="plant.metadata != null">{{ plant.metadata.family }}</strong>
         </material-list-item>
     </material-list>
+    <material-button (trigger)="deletePlot"
+                     raised
+                     clear-size>
+        <material-icon icon="delete"></material-icon>
+    </material-button>
+    <material-button (trigger)="editPlot = true"
+                     [disabled]="editPlot"
+                     raised
+                     clear-size>
+        <material-icon icon="edit"></material-icon>
+    </material-button>
+
+    <modal [visible]="editPlot">
+        <material-dialog class="basic-dialog">
+            <div id="create">
+                <garden-plot-edit
+                        [plot]="plot"
+                        (onPlotSave)="savePlot"
+                        (onCancel)="editPlot = false">
+
+                </garden-plot-edit>
+            </div>
+        </material-dialog>
+    </modal>
 </div>

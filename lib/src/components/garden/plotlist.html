@@ -9,7 +9,7 @@
 
 <material-list>
     <material-list-item *ngFor="let plot of plots">
-        <garden-plot [plot]="plot"></garden-plot>
+        <garden-plot [plot]="plot" (onPlotDelete)="deletePlot"></garden-plot>
     </material-list-item>
 </material-list>
 <material-button (trigger)="addPlot = true"

@@ -15,10 +15,12 @@ class GardenService {
     return await _storage.getAllPlots();
   }
 
-  Future<bool> addPlots(List<Plot> plots) async {
-    await _storage.addAll(plots);
+  Future addPlots(List<Plot> plots) async {
+    return await _storage.addAll(plots);
+  }
 
-    return Future.delayed(Duration(seconds: 2), () => true);
+  Future deletePlot(plot) async {
+    return _storage.deletePlot(plot);
   }
 }
 
@@ -75,6 +77,8 @@ class Storage {
     for(var plot in plots) {
       await _addPlot(plot);
     }
+
+    return true;
   }
 
   _addPlot(Plot plot) async {
@@ -85,6 +89,17 @@ class Storage {
       var key = await store.add(plot.toJson());
 
       plot.id = key;
+    }
+
+    return plot;
+  }
+
+  deletePlot(Plot plot) async {
+    var trans = _database.transaction(MILESTONE_STORE, 'readwrite');
+    var store = trans.objectStore(MILESTONE_STORE);
+
+    if(plot.id != null) {
+      var key = await store.delete(plot.id);
     }
 
     return trans.completed;

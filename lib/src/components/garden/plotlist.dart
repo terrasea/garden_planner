@@ -51,4 +51,9 @@ class PlotList implements OnInit {
   saveGarden(e) async {
     await _gardenService.addPlots(plots);
   }
+
+  deletePlot(plot) async {
+    await _gardenService.deletePlot(plot);
+    plots.remove(plot);
+  }
 }
